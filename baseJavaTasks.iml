@@ -52,5 +52,8 @@
     </orderEntry>
     <orderEntry type="library" name="junit.platform.suite" level="project" />
     <orderEntry type="library" name="junit.jupiter" level="project" />
+    <orderEntry type="library" name="glassfish.jaxb.runtime" level="project" />
+    <orderEntry type="library" name="google.code.gson" level="project" />
+    <orderEntry type="library" name="jakarta.xml.bind.api" level="project" />
   </component>
 </module>
