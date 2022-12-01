@@ -52,6 +52,10 @@ public class Resume implements Serializable {
         return contacts;
     }
 
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
+    }
+
     public String getContact(ContactType type) {
         return contacts.get(type);
     }
@@ -94,12 +98,11 @@ public class Resume implements Serializable {
 
     @Override
     public String toString() {
-        return "Resume{" +
-                "uuid='" + uuid + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", contacts=" + contacts +
-                ", sections=" + sections +
-                '}';
+        return "Resume " +"\n"+
+                "Uuid= " + uuid + "\n"+
+                "FullName= " + fullName + "\n"+
+                "Contacts= " + contacts + "\n"+
+                "Sections= " + sections;
     }
 
 //    @Override

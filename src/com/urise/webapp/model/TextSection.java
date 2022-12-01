@@ -37,8 +37,6 @@ public class TextSection extends AbstractSection { //PERSONAL, OBJECTIVE
 
     @Override
     public String toString() {
-        return "TextSection{" +
-                "content='" + content + '\'' +
-                '}';
+        return content + "\n";
     }
 }

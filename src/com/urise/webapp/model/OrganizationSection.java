@@ -18,7 +18,7 @@ public class OrganizationSection extends AbstractSection {  //EXPERIENCE, EDUCAT
     }
 
     public OrganizationSection(List<Organization> organizationList) {
-        Objects.requireNonNull(organizationList,"organizationList must not be null");
+        Objects.requireNonNull(organizationList, "organizationList must not be null");
         this.organizationList = organizationList;
     }
 
@@ -43,8 +43,6 @@ public class OrganizationSection extends AbstractSection {  //EXPERIENCE, EDUCAT
 
     @Override
     public String toString() {
-        return "OrganizationSection{" +
-                "organizationList=" + organizationList +
-                '}';
+        return organizationList + "\n";
     }
 }
