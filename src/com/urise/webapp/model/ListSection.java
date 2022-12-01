@@ -43,8 +43,6 @@ public class ListSection extends AbstractSection { //ACHIEVEMENT, QUALIFICATIONS
 
     @Override
     public String toString() {
-        return "ListSection{" +
-                "strings=" + items +
-                '}';
+        return items + "\n";
     }
 }

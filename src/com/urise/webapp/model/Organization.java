@@ -132,12 +132,12 @@ public class Organization implements Serializable {
 
         @Override
         public String toString() {
-            return "Period{" +
+            return
                     "title='" + title + '\'' +
                     ", description='" + description + '\'' +
                     ", startDate=" + startDate +
                     ", endDate=" + endDate +
-                    '}';
+                    '}' + "\n";
         }
     }
 }
