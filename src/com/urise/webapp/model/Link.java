@@ -43,6 +43,6 @@ public class Link implements Serializable {
         return "Link{" +
                 "name='" + name + '\'' +
                 ", url=" + url +
-                '}';
+                '}' + "\n";
     }
 }
