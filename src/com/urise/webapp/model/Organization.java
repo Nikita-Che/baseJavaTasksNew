@@ -1,11 +1,15 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.util.LocalDateAdapter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,6 +65,7 @@ public class Organization implements Serializable {
                 '}';
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Period implements Serializable {
         public Period() {
         }
@@ -70,8 +75,13 @@ public class Organization implements Serializable {
 
         private String title;
         private String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate endDate;
+
+        private Date startDate1;
+        private Date endDate1;
 
 //        public Period(int startYear, Month startMonth, String title, String description) {
 //            this(DateUtil.of(startYear, startMonth), NOW, title, description);
@@ -134,10 +144,10 @@ public class Organization implements Serializable {
         public String toString() {
             return
                     "title='" + title + '\'' +
-                    ", description='" + description + '\'' +
-                    ", startDate=" + startDate +
-                    ", endDate=" + endDate +
-                    '}' + "\n";
+                            ", description='" + description + '\'' +
+                            ", startDate=" + startDate +
+                            ", endDate=" + endDate +
+                            "\n";
         }
     }
 }

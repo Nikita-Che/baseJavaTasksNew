@@ -43,7 +43,7 @@ public class ResumeTestData {
         qualifications.add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript");
         ListSection qualiflistSection = new ListSection(qualifications);
 
-        LocalDate startDate = LocalDate.of(2020, 11, 15);
+        LocalDate startDate = LocalDate.of(2022, 11, 15);
         LocalDate endDate = LocalDate.of(2022, 12, 30);
         Organization.Period period = new Organization.Period("Ментор", "Организация процесса обучения", startDate, endDate);
         List<Organization.Period> periodList = new ArrayList<>();
@@ -56,7 +56,6 @@ public class ResumeTestData {
             throw new RuntimeException(e);
         }
         Organization organization = new Organization("JavaRush", web, periodList);
-
         LocalDate startDate1 = LocalDate.of(2021, 12, 1);
         LocalDate endDate1 = DateUtil.NOW;
         Organization.Period period1 = new Organization.Period("Старший разработчик", "Организация процесса разработки", startDate1, endDate1);
@@ -70,21 +69,35 @@ public class ResumeTestData {
             throw new RuntimeException(e);
         }
         Organization organization1 = new Organization("JavaOps.ru", web1, periodList1);
-
         List<Organization> organizationList = new ArrayList<>();
         organizationList.add(organization);
         organizationList.add(organization1);
-
         OrganizationSection expOrganizationSection = new OrganizationSection(organizationList);
-//        OrganizationSection expOrganizationSection1 = new OrganizationSection(organizationList);
+
+        LocalDate startDate2 = LocalDate.of(2020, 11, 15);
+        LocalDate endDate2 = LocalDate.of(2022, 12, 30);
+        Organization.Period period2 = new Organization.Period("Студент", "Обучение в университете", startDate2, endDate2);
+        List<Organization.Period> periodList2 = new ArrayList<>();
+        periodList2.add(period2);
+        String url2 = "https://CHEL-GU.ru";
+        URL web2 = null;
+        try {
+            web2 = new URL(url2);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        Organization edu1 = new Organization("CHEL-GU", web2, periodList2);
+        List<Organization> educationList = new ArrayList<>();
+        educationList.add(edu1);
+        OrganizationSection educationSection = new OrganizationSection(educationList);
 
         Map<SectionType, AbstractSection> sectionsWorker = new EnumMap<SectionType, AbstractSection>(SectionType.class);
         sectionsWorker.put(SectionType.PERSONAL, personalTextSection);
         sectionsWorker.put(SectionType.OBJECTIVE, objectiveTextSection);
         sectionsWorker.put(SectionType.ACHIEVEMENT, achivementlistSection);
         sectionsWorker.put(SectionType.QUALIFICATIONS, qualiflistSection);
-        sectionsWorker.put(SectionType.EXPERIENCE, expOrganizationSection); // TODO: 29.11.2022 Вернуть добавление. Косячат тесты в листе периодов. Периоды не добавляются адекватно
-//        sectionsWorker.put(SectionType.EDUCATION, expOrganizationSection1); //todo добавить до конца и разобраться с localdateАдаптером.
+        sectionsWorker.put(SectionType.EXPERIENCE, expOrganizationSection);
+        sectionsWorker.put(SectionType.EDUCATION, educationSection); //todo добавить до конца и разобраться с localdateАдаптером.
 
         Resume resume = new Resume(uuid, fullName);
         resume.addSections(sectionsWorker);
