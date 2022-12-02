@@ -1,14 +1,21 @@
 package com.urise.webapp.storage.serializer;
 
-import com.urise.webapp.model.AbstractSection;
-import com.urise.webapp.model.ContactType;
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.model.SectionType;
+import com.urise.webapp.model.*;
 
 import java.io.*;
+import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 public class DataStreamSerializer implements SerializerStrategie {
+
+    //    public static void main(String[] args) throws IOException {
+//        Resume resume = ResumeTestData.createResume("12", "Pidor");
+//        DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File("f://java.txt")));
+//        doWrite(resume, dos);
+//    }
+
+
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
@@ -20,14 +27,47 @@ public class DataStreamSerializer implements SerializerStrategie {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             }
-            Map<SectionType, AbstractSection> sections = resume.getSections();
-            dos.writeInt(sections.size());
-            for (Map.Entry<SectionType,AbstractSection> sec : sections.entrySet()){
-                dos.writeUTF(sec.getKey().name());
-                dos.writeUTF(sec.getValue().toString());
+
+            TextSection personal = (TextSection) resume.getSection(SectionType.PERSONAL);
+            dos.writeUTF(personal.getContent());
+            TextSection objective = (TextSection) resume.getSection(SectionType.OBJECTIVE);
+            dos.writeUTF(objective.getContent());
+
+            ListSection achivement = (ListSection) resume.getSection(SectionType.ACHIEVEMENT);
+            List<String> list = achivement.getItems();
+            for (String s : list) {
+                dos.writeUTF(s);
             }
-            //все секции - инты это номера секции, все мапы внутри секции стринги.
-            // TODO implements sections
+            ListSection qualifications = (ListSection) resume.getSection(SectionType.QUALIFICATIONS);
+            List<String> list1 = qualifications.getItems();
+            for (String s : list1) {
+                dos.writeUTF(s);
+            }
+
+            OrganizationSection exp = (OrganizationSection) resume.getSection(SectionType.EXPERIENCE);
+            addListOrganizations(dos, exp);
+            OrganizationSection education = (OrganizationSection) resume.getSection(SectionType.EDUCATION);
+            addListOrganizations(dos, education);
+        }
+    }
+
+    private static void addListOrganizations(DataOutputStream dos, OrganizationSection exp) throws IOException {
+        List<Organization> organizationList = exp.getOrganizationList();
+        for (Organization organization : organizationList) {
+            dos.writeUTF(organization.getName());
+            URL url = organization.getWebsite();
+            dos.writeUTF(url.toString());
+            addPeriods(dos, organization);
+        }
+    }
+
+    private static void addPeriods(DataOutputStream dos, Organization organization) throws IOException {
+        List<Organization.Period> periods = organization.getPeriods();
+        for (Organization.Period period : periods) {
+            dos.writeUTF(period.getTitle());
+            dos.writeUTF(period.getDescription());
+            dos.writeUTF(String.valueOf(period.getStartDate()));
+            dos.writeUTF(String.valueOf(period.getEndDate()));
         }
     }
 
@@ -42,9 +82,6 @@ public class DataStreamSerializer implements SerializerStrategie {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
-            for (int i = 0; i < size; i++) {
-//                resume.addSection(SectionType.valueOf(dis.readUTF()), dis.readUTF());
-            }
             // TODO implements sections
             return resume;
         }

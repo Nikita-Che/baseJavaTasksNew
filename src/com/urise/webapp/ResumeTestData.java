@@ -16,7 +16,7 @@ public class ResumeTestData {
     public static Resume createResume(String uuid, String fullName) {
 
         Map<ContactType, String> contacts = new HashMap<>();
-        contacts.put(ContactType.PHONE, "8-351-222-22-22");
+        contacts.put(ContactType.PHONE, "8-351-222-22-21");
         contacts.put(ContactType.MOBILE, "8-950-733-90-74");
         contacts.put(ContactType.HOME_PHONE, "8+351-794-35-80");
         contacts.put(ContactType.EMAIL, "nekitozzz@rambler.ru");
@@ -39,8 +39,8 @@ public class ResumeTestData {
         ListSection achivementlistSection = new ListSection(achivementlist);
 
         List<String> qualifications = new ArrayList<>();
-        qualifications.add("Java Frameworks: Java 8, Java Executor, Spring MVC, Security, Data, Clouds, Boot, JPA (Hibernate, EclipseLink), Jasperreports, JUnit");
-        qualifications.add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript");
+        qualifications.add("Джава, Джава 8, Джава 88, Джава69");
+        qualifications.add("Языки: Джава, Питон, Обезьяна, Плюсы, Осел");
         ListSection qualiflistSection = new ListSection(qualifications);
 
         LocalDate startDate = LocalDate.of(2022, 11, 15);
@@ -97,7 +97,7 @@ public class ResumeTestData {
         sectionsWorker.put(SectionType.ACHIEVEMENT, achivementlistSection);
         sectionsWorker.put(SectionType.QUALIFICATIONS, qualiflistSection);
         sectionsWorker.put(SectionType.EXPERIENCE, expOrganizationSection);
-        sectionsWorker.put(SectionType.EDUCATION, educationSection); //todo добавить до конца и разобраться с localdateАдаптером.
+        sectionsWorker.put(SectionType.EDUCATION, educationSection);
 
         Resume resume = new Resume(uuid, fullName);
         resume.addSections(sectionsWorker);
