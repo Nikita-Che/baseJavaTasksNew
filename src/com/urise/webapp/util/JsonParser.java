@@ -6,10 +6,13 @@ import com.urise.webapp.model.AbstractSection;
 
 import java.io.Reader;
 import java.io.Writer;
+import java.time.LocalDate;
 
 public class JsonParser {
     private static Gson GSON = new GsonBuilder()
             .registerTypeAdapter(AbstractSection.class, new JsonSectionAdapter<>())
+            .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+            .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
             .create();
 
     public static <T> T read(Reader reader, Class<T> clazz) {

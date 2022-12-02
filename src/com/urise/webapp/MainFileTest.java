@@ -17,10 +17,7 @@ public class MainFileTest {
 //        System.out.println(file.isDirectory());
 //        System.out.println(file.isHidden());
 
-
         Resume resume = ResumeTestData.createResume("1 ", "Nikita Chertkov");
         System.out.println(resume);
-
-
     }
 }
