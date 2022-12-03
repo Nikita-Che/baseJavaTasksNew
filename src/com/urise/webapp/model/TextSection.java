@@ -11,6 +11,10 @@ public class TextSection extends AbstractSection { //PERSONAL, OBJECTIVE
     private static final long serialVersionUID = 1L;
     private String content;
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public TextSection(String content) {
         Objects.requireNonNull(content, "content must not be null");
         this.content = content;
