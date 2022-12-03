@@ -4,8 +4,11 @@ import com.urise.webapp.model.*;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.urise.webapp.model.SectionType.*;
 
 public class DataStreamSerializer implements SerializerStrategie {
 
@@ -28,25 +31,25 @@ public class DataStreamSerializer implements SerializerStrategie {
                 dos.writeUTF(entry.getValue());
             }
 
-            TextSection personal = (TextSection) resume.getSection(SectionType.PERSONAL);
+            TextSection personal = (TextSection) resume.getSection(PERSONAL);
             dos.writeUTF(personal.getContent());
-            TextSection objective = (TextSection) resume.getSection(SectionType.OBJECTIVE);
+            TextSection objective = (TextSection) resume.getSection(OBJECTIVE);
             dos.writeUTF(objective.getContent());
 
-            ListSection achivement = (ListSection) resume.getSection(SectionType.ACHIEVEMENT);
+            ListSection achivement = (ListSection) resume.getSection(ACHIEVEMENT);
             List<String> list = achivement.getItems();
             for (String s : list) {
                 dos.writeUTF(s);
             }
-            ListSection qualifications = (ListSection) resume.getSection(SectionType.QUALIFICATIONS);
+            ListSection qualifications = (ListSection) resume.getSection(QUALIFICATIONS);
             List<String> list1 = qualifications.getItems();
             for (String s : list1) {
                 dos.writeUTF(s);
             }
 
-            OrganizationSection exp = (OrganizationSection) resume.getSection(SectionType.EXPERIENCE);
+            OrganizationSection exp = (OrganizationSection) resume.getSection(EXPERIENCE);
             addListOrganizations(dos, exp);
-            OrganizationSection education = (OrganizationSection) resume.getSection(SectionType.EDUCATION);
+            OrganizationSection education = (OrganizationSection) resume.getSection(EDUCATION);
             addListOrganizations(dos, education);
         }
     }
@@ -81,6 +84,29 @@ public class DataStreamSerializer implements SerializerStrategie {
             for (int i = 0; i < size; i++) {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
+            TextSection personal = new TextSection();
+            personal.setContent(dis.readUTF());
+            resume.addSection(PERSONAL, personal);
+
+            TextSection objective = new TextSection();
+            objective.setContent(dis.readUTF());
+            resume.addSection(OBJECTIVE, objective);
+
+            ListSection achivement = new ListSection();
+            List<String> items = new ArrayList<>();
+            items.add(dis.readUTF());
+            items.add(dis.readUTF());
+            achivement.setItems(items);
+            resume.addSection(ACHIEVEMENT, achivement);
+
+            ListSection qualifications = new ListSection();
+            List<String> items1 = new ArrayList<>();
+            items1.add(dis.readUTF());
+            items1.add(dis.readUTF());
+            qualifications.setItems(items1);
+            resume.addSection(QUALIFICATIONS, qualifications);
+
+
 
             // TODO implements sections
             return resume;
