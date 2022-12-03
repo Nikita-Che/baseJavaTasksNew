@@ -13,6 +13,7 @@ public class OrganizationSection extends AbstractSection {  //EXPERIENCE, EDUCAT
     private static final long serialVersionUID = 1L;
     private List<Organization> organizationList;
 
+
     public OrganizationSection(Organization... organizations) {
         this(Arrays.asList(organizations));
     }
@@ -24,6 +25,10 @@ public class OrganizationSection extends AbstractSection {  //EXPERIENCE, EDUCAT
 
     public List<Organization> getOrganizationList() {
         return organizationList;
+    }
+
+    public void setOrganizationList(List<Organization> organizationList) {
+        this.organizationList = organizationList;
     }
 
     @Override
