@@ -1,5 +1,3 @@
-package com.urise.webapp.storage;
-
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
@@ -16,7 +14,6 @@ import org.junit.platform.suite.api.Suite;
                 XmlPathStorageTest.class,
                 JsonPathStorageTest.class,
                 DataPathStorageTest.class
-
         })
 public class AllStorageTests {
 
