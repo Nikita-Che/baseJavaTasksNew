@@ -19,6 +19,7 @@ public abstract class AbstractStorageTest {
     // TODO: пасс с рабочего и домашнего компа
 //    static String path = "C:\\Users\\nikita\\Desktop\\GitHub\\basejava\\storage";
     static String path = "D:\\Никита\\java\\repo\\basejava\\storage";
+//    static String path = "D:\\storage";
     protected static final File STORAGE_DIR = new File(path);
 
     private final Storage storage;

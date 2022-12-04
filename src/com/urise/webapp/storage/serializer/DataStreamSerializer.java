@@ -4,8 +4,12 @@ import com.urise.webapp.model.*;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.urise.webapp.model.SectionType.valueOf;
 
 public class DataStreamSerializer implements SerializerStrategie {
 //    public static void main(String[] args) throws IOException {
@@ -78,87 +82,54 @@ public class DataStreamSerializer implements SerializerStrategie {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
+            int size2 = dis.readInt();
+            for (int i = 0; i < size2; i++) {
+                String se = dis.readUTF();
+                SectionType sectionType = SectionType.valueOf(String.valueOf(valueOf(se))); //todo ошбика где то. SectionType не так должен находиться
+                switch (sectionType) {
+                    case PERSONAL, OBJECTIVE -> {
+                        TextSection textSection = new TextSection();
+                        textSection.setContent(dis.readUTF());
+                        resume.addSection(sectionType, textSection);
+                    }
+                    case ACHIEVEMENT, QUALIFICATIONS -> {
+                        ListSection listSection = new ListSection();
+                        List<String> items = new ArrayList<>();
+                        items.add(dis.readUTF());
+                        items.add(dis.readUTF());
+                        listSection.setItems(items);
+                        resume.addSection(sectionType, listSection);
+                    }
+                    case EXPERIENCE, EDUCATION -> {
+                        OrganizationSection exp = new OrganizationSection();
+                        List<Organization> organizationList = new ArrayList<>();
 
-//            TextSection personal = new TextSection();
-//            personal.setContent(dis.readUTF());
-//            resume.addSection(PERSONAL, personal);
-//
-//            TextSection objective = new TextSection();
-//            objective.setContent(dis.readUTF());
-//            resume.addSection(OBJECTIVE, objective);
-//
-//            ListSection achivement = new ListSection();
-//            List<String> items = new ArrayList<>();
-//            items.add(dis.readUTF());
-//            items.add(dis.readUTF());
-//            achivement.setItems(items);
-//            resume.addSection(ACHIEVEMENT, achivement);
-//
-//            ListSection qualifications = new ListSection();
-//            List<String> items1 = new ArrayList<>();
-//            items1.add(dis.readUTF());
-//            items1.add(dis.readUTF());
-//            qualifications.setItems(items1);
-//            resume.addSection(QUALIFICATIONS, qualifications);
-//
-//            OrganizationSection exp = new OrganizationSection();
-//            List<Organization> organizationList = new ArrayList<>();
-//
-//            Organization organization = new Organization();
-//            organization.setName(dis.readUTF());
-//            URL url = new URL(dis.readUTF());
-//            organization.setWebsite(url);
-//            List<Organization.Period> periods = new ArrayList<>();
-//            Organization.Period period = new Organization.Period();
-//            period.setTitle(dis.readUTF());
-//            period.setDescription(dis.readUTF());
-//            period.setStartDate(LocalDate.parse(dis.readUTF()));
-//            period.setEndDate(LocalDate.parse(dis.readUTF()));
-//            periods.add(period);
-//
-//            Organization organization1 = new Organization();
-//            organization1.setName(dis.readUTF());
-//            URL url1 = new URL(dis.readUTF());
-//            organization1.setWebsite(url1);
-//            List<Organization.Period> periods1 = new ArrayList<>();
-//            Organization.Period period1 = new Organization.Period();
-//            period1.setTitle(dis.readUTF());
-//            period1.setDescription(dis.readUTF());
-//            period1.setStartDate(LocalDate.parse(dis.readUTF()));
-//            period1.setEndDate(LocalDate.parse(dis.readUTF()));
-//            periods1.add(period1);
-//
-//            organization.setPeriods(periods);
-//            organization1.setPeriods(periods1);
-//            organizationList.add(organization);
-//            organizationList.add(organization1);
-//            exp.setOrganizationList(organizationList);
-//
-//            resume.addSection(EXPERIENCE, exp);
-//
-//            OrganizationSection edu = new OrganizationSection();
-//            List<Organization> eduList = new ArrayList<>();
-//
-//            Organization eduOrg = new Organization();
-//            eduOrg.setName(dis.readUTF());
-//            URL eduUrl = new URL(dis.readUTF());
-//            eduOrg.setWebsite(eduUrl);
-//            List<Organization.Period> eduPeriods = new ArrayList<>();
-//            Organization.Period eduPeriod = new Organization.Period();
-//            eduPeriod.setTitle(dis.readUTF());
-//            eduPeriod.setDescription(dis.readUTF());
-//            eduPeriod.setStartDate(LocalDate.parse(dis.readUTF()));
-//            eduPeriod.setEndDate(LocalDate.parse(dis.readUTF()));
-//            eduPeriods.add(eduPeriod);
-//
-//            eduOrg.setPeriods(eduPeriods);
-//            eduList.add(eduOrg);
-//            edu.setOrganizationList(eduList);
-//
-//            resume.addSection(EDUCATION, edu);
+                        Organization organization = new Organization();
+                        organization.setName(dis.readUTF());
+                        URL url = new URL(dis.readUTF());
+                        organization.setWebsite(url);
+                        List<Organization.Period> periods = new ArrayList<>();
+                        Organization.Period period = new Organization.Period();
+                        period.setTitle(dis.readUTF());
+                        period.setDescription(dis.readUTF());
+                        period.setStartDate(LocalDate.parse(dis.readUTF()));
+                        period.setEndDate(LocalDate.parse(dis.readUTF()));
+                        periods.add(period);
+                        organization.setPeriods(periods);
+                        organizationList.add(organization);
+                        exp.setOrganizationList(organizationList);
 
-
+                        resume.addSection(sectionType, exp);
+                    }
+                }
+            }
             return resume;
         }
     }
 }
+
+// ОСНОВА ТОГО КАК НАДО ДОБАВЛЯТЬ.
+//                SectionType sectionType = SectionType.valueOf(dis.readUTF());
+//                AbstractSection abstractSection = dis.readUTF();
+//                resume.addSection(sectionType, abstractSection);
+
