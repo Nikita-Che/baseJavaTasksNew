@@ -3,6 +3,8 @@ package com.urise.webapp.storage.serializer;
 import com.urise.webapp.model.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +44,12 @@ public class DataStreamSerializer implements SerializerStrategie {
                             dos.writeUTF(s);
                         }
                     }
-                    case EXPERIENCE, EDUCATION -> {}}}}}
+                    case EXPERIENCE, EDUCATION -> {
+                    }
+                }
+            }
+        }
+    }
 //                    case EXPERIENCE, EDUCATION -> {
 //                        OrganizationSection exp = (OrganizationSection) entry.getValue();
 //                        addListOraginizationWithPeriods(dos, exp);
@@ -74,29 +81,31 @@ public class DataStreamSerializer implements SerializerStrategie {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
-//            Map<SectionType, AbstractSection> sectionMap = new HashMap<>();
-//            int size1 = dis.readInt();
-//            for (int i = 0; i < size1; i++) {
-                SectionType sectionType = (SectionType) new Object();
+            EnumMap<SectionType, AbstractSection> sectionMap = new EnumMap<>(SectionType.class);
+            int size1 = dis.readInt();
+            for (int i = 0; i < size1; i++) {
+                SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
                     case PERSONAL, OBJECTIVE -> {
-//                        TextSection textSection = new TextSection();
-//                        textSection.setContent(dis.readUTF());
-//                        sectionMap.put(sectionType, textSection);
+                        TextSection textSection = new TextSection();
+                        textSection.setContent(dis.readUTF());
+                        sectionMap.put(sectionType, textSection);
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
-//                        ListSection listSection = new ListSection();
-//                        List<String> items = new ArrayList<>();
-//                        items.add(dis.readUTF());
-//
-//                        listSection.setItems(items);
-//                        sectionMap.put(sectionType, listSection);
+                        ListSection listSection = new ListSection();
+                        List<String> items = new ArrayList<>();
+                        int size2 = dis.readInt();
+                        for (int i1 = 0; i1 < size2; i1++) {
+                            items.add(dis.readUTF());
+                        }
+                        listSection.setItems(items);
+                        sectionMap.put(sectionType, listSection);
                     }
                     case EXPERIENCE, EDUCATION -> {
                     }
                 }
-//            }
-//            resume.addSections(sectionMap);
+            }
+            resume.addSections(sectionMap);
             return resume;
         }
     }
