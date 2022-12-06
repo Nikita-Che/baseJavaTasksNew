@@ -3,8 +3,6 @@ package com.urise.webapp.storage.serializer;
 import com.urise.webapp.model.*;
 
 import java.io.*;
-import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -16,7 +14,7 @@ public class DataStreamSerializer implements SerializerStrategie {
 //        DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File("c://java/java.txt")));
 //        doWrite(resume, dos);
 //}
-
+//
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
@@ -47,21 +45,21 @@ public class DataStreamSerializer implements SerializerStrategie {
                         }
                     }
                     case EXPERIENCE, EDUCATION -> {
-                        List<Organization> organizationList = ((OrganizationSection) sections).getOrganizationList();
-                        dos.writeInt(organizationList.size());
-                        for (Organization s : organizationList) {
-                            dos.writeUTF(s.getName());
-                            dos.writeUTF(String.valueOf(s.getWebsite()));
-                            List<Organization.Period> periods = s.getPeriods();
-                            dos.writeUTF(String.valueOf(periods));
-                        }
+//                        List<Organization> organizationList = ((OrganizationSection) sections).getOrganizationList();
+//                        dos.writeInt(organizationList.size());
+//                        for (Organization s : organizationList) {
+//                            dos.writeUTF(s.getName());
+//                            dos.writeUTF(String.valueOf(s.getWebsite()));
+//                            List<Organization.Period> periods = s.getPeriods();
+//                            dos.writeUTF(String.valueOf(periods));
+//                        }
                     }
                 }
             }
         }
     }
 
-    @Override
+   @Override
     public Resume doRead(InputStream is) throws IOException {
         try (DataInputStream dis = new DataInputStream(is)) {
             String uuid = dis.readUTF();
@@ -93,34 +91,34 @@ public class DataStreamSerializer implements SerializerStrategie {
                         sectionMap.put(sectionType, listSection);
                     }
                     case EDUCATION, EXPERIENCE -> {
-                        OrganizationSection organizationSection = new OrganizationSection();
-                        int size2 = dis.readInt();
-                        List<Organization> organizationList = new ArrayList<>();
-                        for (int j = 0; j < size2; j++) {
-                            Organization organization = new Organization();
-                            organization.setName(dis.readUTF());
-                            URL url = new URL(dis.readUTF());
-                            organization.setWebsite(url);
-
-                            List<Organization.Period> periods = new ArrayList<>();
-                            int size3 = dis.readInt();
-                            for (int i1 = 0; i1 < size3; i1++) {
-                                Organization.Period period = new Organization.Period();
-                                period.setTitle(dis.readUTF());
-                                period.setDescription(dis.readUTF());
-                                period.setStartDate(LocalDate.parse(dis.readUTF()));
-                                period.setEndDate(LocalDate.parse(dis.readUTF()));
-                                periods.add(period);
-                            }
-                            organization.setPeriods(periods);
-                            organizationList.add(organization);
-                            organizationSection.setOrganizationList(organizationList);
-                        }
-                        sectionMap.put(sectionType, organizationSection);
+//                        OrganizationSection organizationSection = new OrganizationSection();
+//                        int size2 = dis.readInt();
+//                        List<Organization> organizationList = new ArrayList<>();
+//                        for (int j = 0; j < size2; j++) {
+//                            Organization organization = new Organization();
+//                            organization.setName(dis.readUTF());
+//                            URL url = new URL(dis.readUTF());
+//                            organization.setWebsite(url);
+//
+//                            List<Organization.Period> periods = new ArrayList<>();
+//                            int size3 = dis.readInt();
+//                            for (int i1 = 0; i1 < size3; i1++) {
+//                                Organization.Period period = new Organization.Period();
+//                                period.setTitle(dis.readUTF());
+//                                period.setDescription(dis.readUTF());
+//                                period.setStartDate(LocalDate.parse(dis.readUTF()));
+//                                period.setEndDate(LocalDate.parse(dis.readUTF()));
+//                                periods.add(period);
+//                            }
+//                            organization.setPeriods(periods);
+//                            organizationList.add(organization);
+//                            organizationSection.setOrganizationList(organizationList);
+//                        }
+//                        sectionMap.put(sectionType, organizationSection);
                     }
                 }
-                resume.addSections(sectionMap);
             }
+            resume.addSections(sectionMap);
             return resume;
         }
     }
