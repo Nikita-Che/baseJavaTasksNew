@@ -11,9 +11,9 @@ import java.util.Map;
 public class DataStreamSerializer implements SerializerStrategie {
 //    public static void main(String[] args) throws IOException {
 //        Resume resume = ResumeTestData.createResume("12", "Pidor");
-//        DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File("f://java.txt")));
+//        DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File("c://java/java.txt")));
 //        doWrite(resume, dos);
-//    }
+//}
 
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
@@ -45,30 +45,16 @@ public class DataStreamSerializer implements SerializerStrategie {
                         }
                     }
                     case EXPERIENCE, EDUCATION -> {
+                        List<Organization> organizationList = ((OrganizationSection) sections).getOrganizationList();
+                        dos.writeInt(organizationList.size());
+                        for (Organization s : organizationList) {
+                            dos.writeUTF(String.valueOf(s));
+                        }
                     }
                 }
             }
         }
     }
-//                    case EXPERIENCE, EDUCATION -> {
-//                        OrganizationSection exp = (OrganizationSection) entry.getValue();
-//                        addListOraginizationWithPeriods(dos, exp);
-//    private static void addListOraginizationWithPeriods(DataOutputStream dos, OrganizationSection exp) throws
-//            IOException {
-//        List<Organization> organizationList = exp.getOrganizationList();
-//        for (Organization organization : organizationList) {
-//            dos.writeUTF(organization.getName());
-//            URL url = organization.getWebsite();
-//            dos.writeUTF(url.toString());
-//            List<Organization.Period> periods = organization.getPeriods();
-//            for (Organization.Period period : periods) {
-//                dos.writeUTF(period.getTitle());
-//                dos.writeUTF(period.getDescription());
-//                dos.writeUTF(valueOf(period.getStartDate()));
-//                dos.writeUTF(valueOf(period.getEndDate()));
-//            }
-//        }
-//    }
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
@@ -93,15 +79,19 @@ public class DataStreamSerializer implements SerializerStrategie {
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         ListSection listSection = new ListSection();
-                        List<String> items = new ArrayList<>();
+                        List<String> stringList = new ArrayList<>();
                         int size2 = dis.readInt();
                         for (int i1 = 0; i1 < size2; i1++) {
-                            items.add(dis.readUTF());
+                            stringList.add(dis.readUTF());
                         }
-                        listSection.setItems(items);
+                        listSection.setItems(stringList);
                         sectionMap.put(sectionType, listSection);
                     }
-                    case EXPERIENCE, EDUCATION -> {
+
+                    case EDUCATION, EXPERIENCE -> {
+                        OrganizationSection organizationSection = new OrganizationSection();
+
+                        sectionMap.put(sectionType, organizationSection);
                     }
                 }
             }
@@ -110,22 +100,4 @@ public class DataStreamSerializer implements SerializerStrategie {
         }
     }
 }
-//                        OrganizationSection exp = new OrganizationSection();
-//                        List<Organization> organizationList = new ArrayList<>();
-//
-//                        Organization organization = new Organization();
-//                        organization.setName(dis.readUTF());
-//                        URL url = new URL(dis.readUTF());
-//                        organization.setWebsite(url);
-//                        List<Organization.Period> periods = new ArrayList<>();
-//                        Organization.Period period = new Organization.Period();
-//                        period.setTitle(dis.readUTF());
-//                        period.setDescription(dis.readUTF());
-//                        period.setStartDate(LocalDate.parse(dis.readUTF()));
-//                        period.setEndDate(LocalDate.parse(dis.readUTF()));
-//                        periods.add(period);
-//                        organization.setPeriods(periods);
-//                        organizationList.add(organization);
-//                        exp.setOrganizationList(organizationList);
-//
-//                        resume.addSection(sectionType, exp);
+
