@@ -1,6 +1,5 @@
 package com.urise.webapp.storage.serializer;
 
-import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.model.*;
 
 import java.io.*;
@@ -11,18 +10,17 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataStreamSerializer {
-//        implements SerializerStrategie {
-    public static void main(String[] args) throws IOException {
-        Resume resume = ResumeTestData.createResume("12", "Pidor");
-        DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File("c://java/java.txt")));
-        doWrite(resume, dos);
-        DataInputStream dis = new DataInputStream(new FileInputStream(new File("c://java/java.txt")));
-        doRead(dis);
-}
+public class DataStreamSerializer implements SerializerStrategie {
+//    public static void main(String[] args) throws IOException {
+//        Resume resume = ResumeTestData.createResume("12", "Pidor");
+//        DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File("c://java/java.txt")));
+//        doWrite(resume, dos);
+//        DataInputStream dis = new DataInputStream(new FileInputStream(new File("c://java/java.txt")));
+//        doRead(dis);
+//    }
 
-//    @Override
-    public static void doWrite(Resume resume, OutputStream os) throws IOException {
+    @Override
+    public void doWrite(Resume resume, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
             dos.writeUTF(resume.getUuid());
             dos.writeUTF(resume.getFullName());
@@ -64,7 +62,6 @@ public class DataStreamSerializer {
                                 dos.writeUTF(String.valueOf(s1.getStartDate()));
                                 dos.writeUTF(String.valueOf(s1.getEndDate()));
                             }
-                            dos.writeUTF(String.valueOf(periods));
                         }
                     }
                 }
@@ -72,8 +69,8 @@ public class DataStreamSerializer {
         }
     }
 
-//   @Override
-    public static Resume doRead(InputStream is) throws IOException {
+    @Override
+    public Resume doRead(InputStream is) throws IOException {
         try (DataInputStream dis = new DataInputStream(is)) {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
@@ -128,9 +125,8 @@ public class DataStreamSerializer {
                 }
             }
             resume.addSections(sectionMap);
-            System.out.println(resume);
             return resume;
         }
-   }
+    }
 }
 
