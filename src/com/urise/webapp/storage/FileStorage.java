@@ -19,7 +19,7 @@ public class FileStorage extends AbstractStorage<File> {
         this.strategie = strategie;
     }
 
-    protected FileStorage(File directory, SerializerStrategie strategie) {
+    public FileStorage(File directory, SerializerStrategie strategie) {
         Objects.requireNonNull(directory, "directory must not be null");
         Objects.requireNonNull(strategie, "strategy must not be null");
         if (!directory.isDirectory()) {
