@@ -65,11 +65,9 @@ public class DataStreamSerializer implements SerializerStrategie {
             }
         }
     }
-
     public interface CustomConsumer <T> {
         void accept(T t) throws IOException;
     }
-
     public <T> void writeWithException (Collection<T> collection, DataOutputStream dos, CustomConsumer<? super T> consumer) throws IOException {
 
     }
