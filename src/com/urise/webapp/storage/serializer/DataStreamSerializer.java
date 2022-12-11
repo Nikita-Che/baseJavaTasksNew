@@ -130,6 +130,7 @@ public class DataStreamSerializer implements SerializerStrategie {
 
             resume.addSections(sectionMap);
             return resume;
+
         }
     }
 }
