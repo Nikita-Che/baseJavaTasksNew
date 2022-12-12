@@ -1,4 +1,5 @@
-import com.urise.webapp.storage.PathStorage;
+package com.urise.webapp.storage;
+
 import com.urise.webapp.storage.serializer.XmlStreamSerializer;
 
 public class XmlPathStorageTest extends AbstractStorageTest {

@@ -1,4 +1,4 @@
-import com.urise.webapp.storage.MapUuidStorage;
+package com.urise.webapp.storage;
 
 public class MapUuidStorageTest extends AbstractStorageTest {
     public MapUuidStorageTest() {

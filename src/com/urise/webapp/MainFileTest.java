@@ -1,6 +1,8 @@
 package com.urise.webapp;
 
-import com.urise.webapp.model.Resume;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class MainFileTest {
     public static void main(String[] args) {
@@ -17,7 +19,13 @@ public class MainFileTest {
 //        System.out.println(file.isDirectory());
 //        System.out.println(file.isHidden());
 
-        Resume resume = ResumeTestData.createResume("1 ", "Nikita Chertkov");
-        System.out.println(resume);
+//        Resume resume = ResumeTestData.createResume("1 ", "Nikita Chertkov");
+//        System.out.println(resume);
+        Consumer<String> print = System.out::println;
+        print.accept("pidor");
+        Consumer<List<String>> listConsumer = System.out::println;
+        List<String> stringList = new ArrayList<>();
+        stringList.add("s");
+        listConsumer.accept(stringList);
     }
 }
