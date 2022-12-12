@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resume>
+    <uuid>uuid2</uuid>
+    <fullName>Petya</fullName>
+    <contacts>
+        <entry>
+            <key>SKYPE</key>
+            <value>vasilisk</value>
+        </entry>
+        <entry>
+            <key>LINKEDIN</key>
+            <value>VasyaLinkedin</value>
+        </entry>
+        <entry>
+            <key>STACKOVERFLOW</key>
+            <value>Vasya Stack</value>
+        </entry>
+        <entry>
+            <key>HOME_PAGE</key>
+            <value>vasya.ru</value>
+        </entry>
+        <entry>
+            <key>EMAIL</key>
+            <value>vasya@vasya</value>
+        </entry>
+        <entry>
+            <key>MOBILE</key>
+            <value>123</value>
+        </entry>
+        <entry>
+            <key>HOME_PHONE</key>
+            <value>321</value>
+        </entry>
+        <entry>
+            <key>GITHUB</key>
+            <value>vasyaGihub</value>
+        </entry>
+        <entry>
+            <key>PHONE</key>
+            <value>89505096</value>
+        </entry>
+    </contacts>
+    <sections>
+        <entry>
+            <key>PERSONAL</key>
+            <value xsi:type="textSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <content>PERSONAL</content>
+            </value>
+        </entry>
+        <entry>
+            <key>OBJECTIVE</key>
+            <value xsi:type="textSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <content>OBJECTIVE</content>
+            </value>
+        </entry>
+        <entry>
+            <key>ACHIEVEMENT</key>
+            <value xsi:type="listSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <items>ACHIEVEMENT</items>
+            </value>
+        </entry>
+        <entry>
+            <key>QUALIFICATIONS</key>
+            <value xsi:type="listSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <items>QUALIFICATIONS</items>
+            </value>
+        </entry>
+        <entry>
+            <key>EXPERIENCE</key>
+            <value xsi:type="organizationSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <organizationList>
+                    <name>organization</name>
+                    <website>https://github.com/Nikita-Che</website>
+                    <periods/>
+                    <periods/>
+                </organizationList>
+                <organizationList>
+                    <name>organization1</name>
+                    <website>https://github.com/Nikita-Che</website>
+                    <periods/>
+                    <periods/>
+                </organizationList>
+            </value>
+        </entry>
+        <entry>
+            <key>EDUCATION</key>
+            <value xsi:type="organizationSection" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <organizationList>
+                    <name>organization</name>
+                    <website>https://github.com/Nikita-Che</website>
+                    <periods/>
+                    <periods/>
+                </organizationList>
+                <organizationList>
+                    <name>organization1</name>
+                    <website>https://github.com/Nikita-Che</website>
+                    <periods/>
+                    <periods/>
+                </organizationList>
+            </value>
+        </entry>
+    </sections>
+</resume>
