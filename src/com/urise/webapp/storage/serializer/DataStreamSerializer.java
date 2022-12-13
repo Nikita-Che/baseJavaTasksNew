@@ -86,10 +86,7 @@ public class DataStreamSerializer implements SerializerStrategie {
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         List<String> stringList = new ArrayList<>();
-                        int listSize = dis.readInt();
-                        for (int j = 0; j < listSize; j++) {
-                            stringList.add(dis.readUTF());
-                        }
+                        readWithException(dis, () -> stringList.add(dis.readUTF()));
                         sectionMap.put(sectionType, new ListSection(stringList));
                     }
                     case EDUCATION, EXPERIENCE -> {
