@@ -37,10 +37,7 @@ public class DataStreamSerializer implements SerializerStrategie {
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         List<String> list = ((ListSection) sections).getItems();
-                        dos.writeInt(list.size());
-                        for (String s : list) {
-                            dos.writeUTF(s);
-                        }
+                        writeWithException(list, dos, dos::writeUTF);
                     }
                     case EXPERIENCE, EDUCATION -> {
                         List<Organization> organizationList = ((OrganizationSection) sections).getOrganizationList();
