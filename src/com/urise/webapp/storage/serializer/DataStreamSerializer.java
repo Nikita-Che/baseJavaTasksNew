@@ -91,28 +91,26 @@ public class DataStreamSerializer implements SerializerStrategie {
                     }
                     case EDUCATION, EXPERIENCE -> {
                         OrganizationSection organizationSection = new OrganizationSection();
-                        int size2 = dis.readInt();
                         List<Organization> organizationList = new ArrayList<>();
-                        for (int j = 0; j < size2; j++) {
+                        readWithException(dis, () -> {
                             Organization organization = new Organization();
                             organization.setName(dis.readUTF());
                             URL url = new URL(dis.readUTF());
                             organization.setWebsite(url);
 
                             List<Organization.Period> periods = new ArrayList<>();
-                            int size3 = dis.readInt();
-                            for (int i1 = 0; i1 < size3; i1++) {
+                            readWithException(dis, () -> {
                                 Organization.Period period = new Organization.Period();
                                 period.setTitle(dis.readUTF());
                                 period.setDescription(dis.readUTF());
                                 period.setStartDate(LocalDate.parse(dis.readUTF()));
                                 period.setEndDate(LocalDate.parse(dis.readUTF()));
                                 periods.add(period);
-                            }
+                            });
                             organization.setPeriods(periods);
                             organizationList.add(organization);
                             organizationSection.setOrganizationList(organizationList);
-                        }
+                        });
                         sectionMap.put(sectionType, organizationSection);
                     }
                 }
