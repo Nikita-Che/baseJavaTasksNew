@@ -32,9 +32,7 @@ public class DataStreamSerializer implements SerializerStrategie {
                 dos.writeUTF(sectionType.name());
                 AbstractSection sections = sectionTypeAbstractSectionEntry.getValue();
                 switch (sectionType) {
-                    case PERSONAL, OBJECTIVE -> {
-                        dos.writeUTF(((TextSection) sections).getContent());
-                    }
+                    case PERSONAL, OBJECTIVE -> dos.writeUTF(((TextSection) sections).getContent());
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         List<String> list = ((ListSection) sections).getItems();
                         writeWithException(list, dos, dos::writeUTF);
@@ -81,9 +79,7 @@ public class DataStreamSerializer implements SerializerStrategie {
             readWithException(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
-                    case PERSONAL, OBJECTIVE -> {
-                        sectionMap.put(sectionType, new TextSection(dis.readUTF()));
-                    }
+                    case PERSONAL, OBJECTIVE -> sectionMap.put(sectionType, new TextSection(dis.readUTF()));
                     case ACHIEVEMENT, QUALIFICATIONS -> {
                         List<String> stringList = new ArrayList<>();
                         readWithException(dis, () -> stringList.add(dis.readUTF()));
@@ -131,3 +127,4 @@ public class DataStreamSerializer implements SerializerStrategie {
         }
     }
 }
+
