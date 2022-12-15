@@ -25,6 +25,22 @@ public class MainDEADLOCK {
         }
     }
 
+    private static void creatingDeadThreads() {
+        for (int i = 0; i < 2; i++) {
+            MyThread myThread = new MyThread();
+            myThread.start();
+        }
+    }
+
+    private static void deadLocking(Object objectForLocking, long millis, Object objectForLocking2) {
+        synchronized (objectForLocking) {
+            sleeper(millis);
+            synchronized (objectForLocking2) {
+                counting();
+            }
+        }
+    }
+
     public static void method1() {
         synchronized (objectForLocking) {
             try {
