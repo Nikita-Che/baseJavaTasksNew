@@ -14,7 +14,7 @@ public class MainConcurrency {
             @Override
             public void run() {
                 System.out.println(getName() + ", " + getState());
-                throw  new IllegalStateException();
+                throw new IllegalStateException();
             }
         };
         thread.start();
@@ -48,7 +48,7 @@ public class MainConcurrency {
             threads.add(thread1);
         }
 
-        threads.forEach(t-> {
+        threads.forEach(t -> {
             try {
                 t.join();
             } catch (InterruptedException e) {
@@ -58,6 +58,25 @@ public class MainConcurrency {
 //        Thread.sleep(500);
         System.out.println(counter);
         System.out.println(MainConcurrency.counter);
+
+        final String lock1 = "lock1";
+        final String lock2 = "lock2";
+        deadLock(lock1, lock2);
+        deadLock(lock2, lock1);
+
+    }
+
+    private static void deadLock(String lock2, String lock1) {
+        new Thread(() -> {
+            System.out.println("Waiting " + lock1);
+            synchronized (lock1) {
+                System.out.println("Holding " + lock1);
+                System.out.println("Waiting " + lock2);
+                synchronized (lock2) {
+                    System.out.println("Holding " + lock2);
+                }
+            }
+        }).start();
     }
 
     private synchronized void inc() {
