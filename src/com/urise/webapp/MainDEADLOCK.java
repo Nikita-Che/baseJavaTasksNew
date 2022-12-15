@@ -52,4 +52,16 @@ public class MainDEADLOCK {
             }
         }
     }
+    private static void counting() {
+        fistCount++;
+        secondCount++;
+    }
+
+    private static void sleeper(Long millis)  {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
