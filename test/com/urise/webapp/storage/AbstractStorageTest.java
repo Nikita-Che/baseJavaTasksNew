@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
@@ -16,11 +17,10 @@ import static com.urise.webapp.ResumeTestData.createResume;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class AbstractStorageTest {
-    // TODO: пасс с рабочего и домашнего компа
-    static String path = "C:\\Users\\nikita\\Desktop\\GitHub\\basejava\\storage";
+//    static String path = Config.get().getStorageDir();
 //    static String path = "D:\\Никита\\java\\repo\\basejava\\storage";
 //    static String path = "D:\\storage";
-    protected static final File STORAGE_DIR = new File(path);
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     private final Storage storage;
 
