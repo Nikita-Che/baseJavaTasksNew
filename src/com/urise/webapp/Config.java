@@ -24,7 +24,6 @@ public class Config {
             throw new IllegalStateException("Invalid config file! " + PROPS.getAbsolutePath());
         }
     }
-
     public File getStorageDir() {
         return storageDir;
     }
