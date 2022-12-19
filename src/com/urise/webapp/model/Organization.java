@@ -22,11 +22,18 @@ public class Organization implements Serializable {
 
     private String name;
     private URL website;
+    private String url;
     private List<Period> periods;
 
     public Organization(String name, URL website, List<Period> periods) {
         this.name = name;
         this.website = website;
+        this.periods = periods;
+    }
+
+    public Organization(String name, String url, List<Period> periods) {
+        this.name = name;
+        this.url = url;
         this.periods = periods;
     }
 

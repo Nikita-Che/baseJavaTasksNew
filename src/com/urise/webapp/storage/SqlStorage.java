@@ -1,11 +1,14 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.sql.ConnectionFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -43,17 +46,25 @@ public class SqlStorage implements Storage {
         LOG.info("save " + r);
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
-            ps.setString(1,r.getUuid());
-            ps.setString(2,r.getFullName());
+            ps.setString(1, r.getUuid());
+            ps.setString(2, r.getFullName());
             ps.execute();
         } catch (SQLException e) {
-            throw new StorageException(e);
+            throw new ExistStorageException(r.getUuid());
         }
     }
 
     @Override
     public void update(Resume r) {
         LOG.info("update " + r);
+        try (Connection conn = connectionFactory.getConnection();
+             PreparedStatement ps = conn.prepareStatement("UPDATE resume SET uuid=? WHERE uuid = ?")) {
+            ps.setString(1, r.getUuid());
+            ps.setString(2, r.getUuid());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new NotExistStorageException(r.getUuid());
+        }
     }
 
     @Override
@@ -63,29 +74,58 @@ public class SqlStorage implements Storage {
              PreparedStatement ps = conn.prepareStatement("SELECT FROM resume r WHERE r.uuid =?")) {
             ps.setString(1, uuid);
             ResultSet rs = ps.executeQuery();
-            if(!rs.next()){
+            if (!rs.next()) {
                 throw new NotExistStorageException(uuid);
             }
             Resume r = new Resume(uuid, rs.getString("full_name"));
             return r;
         } catch (SQLException e) {
-            throw new StorageException(e);
+            throw new NotExistStorageException(uuid);
         }
     }
 
     @Override
     public void delete(String uuid) {
         LOG.info("delete " + uuid);
+        try (Connection conn = connectionFactory.getConnection();
+             PreparedStatement ps = conn.prepareStatement("DELETE FROM resume r WHERE r.uuid =?")) {
+            ps.execute();
+        } catch (SQLException e) {
+            throw new NotExistStorageException(uuid);
+        }
     }
 
     @Override
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
-        return null;
+        try (Connection conn = connectionFactory.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * from resume")) {
+            ResultSet resultSet = ps.executeQuery();
+            List<Resume> resumes = new ArrayList<>();
+            while (resultSet.next()) {
+                resumes.add(new Resume(resultSet.getString("uuid").trim(), resultSet.getString("full_name")));
+            }
+            resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+            return resumes;
+        } catch (SQLException e) {
+            throw new StorageException(e);
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        try (Connection conn = connectionFactory.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * from resume")) {
+            ResultSet resultSet = ps.executeQuery();
+            List<Resume> resumes = new ArrayList<>();
+            while (resultSet.next()) {
+                resumes.add(new Resume(resultSet.getString("uuid"), resultSet.getString("full_name")));
+            }
+            resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+            return resumes.size();
+        } catch (SQLException e) {
+            throw new StorageException(e);
+        }
     }
 }
+
