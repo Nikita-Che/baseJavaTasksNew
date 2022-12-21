@@ -49,7 +49,10 @@ public class SqlStorage implements Storage {
             ps.setString(2, r.getFullName());
             ps.execute();
         } catch (SQLException e) {
-            throw new ExistStorageException(r.getUuid());
+            if (e.getSQLState().equals("23505")) {
+                throw new ExistStorageException(r.getUuid());
+            }
+            throw new StorageException(e);
         }
     }
 
