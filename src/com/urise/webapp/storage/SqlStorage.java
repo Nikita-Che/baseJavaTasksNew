@@ -115,14 +115,10 @@ public class SqlStorage implements Storage {
     @Override
     public int size() {
         try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT * from resume")) {
+             PreparedStatement ps = conn.prepareStatement("SELECT count(resume) from resume")) {
             ResultSet resultSet = ps.executeQuery();
-            List<Resume> resumes = new ArrayList<>();
-            while (resultSet.next()) {
-                resumes.add(new Resume(resultSet.getString("uuid"), resultSet.getString("full_name")));
-            }
-            resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
-            return resumes.size();
+            resultSet.next();
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             throw new StorageException(e);
         }
