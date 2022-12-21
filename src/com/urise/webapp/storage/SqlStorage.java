@@ -8,7 +8,6 @@ import com.urise.webapp.sql.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -99,13 +98,13 @@ public class SqlStorage implements Storage {
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
         try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT * from resume")) {
+             PreparedStatement ps = conn.prepareStatement("SELECT * from resume ORDER BY uuid DESC ")) {
             ResultSet resultSet = ps.executeQuery();
             List<Resume> resumes = new ArrayList<>();
             while (resultSet.next()) {
-                resumes.add(new Resume(resultSet.getString("uuid").trim(), resultSet.getString("full_name")));
+                resumes.add(new Resume(resultSet.getString("uuid"), resultSet.getString("full_name")));
             }
-            resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+//            resumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
             return resumes;
         } catch (SQLException e) {
             throw new StorageException(e);

@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static com.urise.webapp.ResumeTestData.createResume;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,10 +22,10 @@ public abstract class AbstractStorageTest {
 
     private final Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_1 = String.valueOf(UUID.randomUUID());
+    private static final String UUID_2 = String.valueOf(UUID.randomUUID());
+    private static final String UUID_3 = String.valueOf(UUID.randomUUID());
+    private static final String UUID_4 = String.valueOf(UUID.randomUUID());
     private static final String FULL_NAME1 = "Vasya";
     private static final String FULL_NAME2 = "Petya";
     private static final String FULL_NAME3 = "Kolya";
