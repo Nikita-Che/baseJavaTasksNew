@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +54,7 @@ public abstract class AbstractStorageTest {
         assertEquals(expected, storage.size());
     }
 
-    private void assertGet(Resume resume) {
+    private void assertGet(Resume resume) throws SQLException {
         Resume r = storage.get(resume.getUuid());
         assertEquals(r.getUuid(), resume.getUuid());
     }
