@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -9,15 +10,15 @@ import java.util.List;
  */
 public interface Storage {
 
-    void clear();
+    void clear() throws SQLException;
 
-    void save(Resume r);
+    void save(Resume r) throws SQLException;
 
-    void update(Resume r);
+    void update(Resume r) throws SQLException;
 
     Resume get(String uuid);
 
-    void delete(String uuid);
+    void delete(String uuid) throws SQLException;
 
     /**
      * @return array, contains only Resumes in storage (without null)
