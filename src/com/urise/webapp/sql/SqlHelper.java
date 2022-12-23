@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class SqlHelper {
 
-    public static void dataBaseRun(ConnectionFactory connectionFactory, String sql, CustomRunnable runnable) throws SQLException{
+    public static void dataBaseRun(ConnectionFactory connectionFactory, String sql, CustomRunnable runnable) throws SQLException {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             runnable.run(ps);
@@ -22,7 +22,7 @@ public class SqlHelper {
     }
 
     public interface CustomRunnable {
-        public abstract void run(PreparedStatement preparedStatement) throws SQLException;
+        void run(PreparedStatement preparedStatement) throws SQLException;
     }
 }
 
