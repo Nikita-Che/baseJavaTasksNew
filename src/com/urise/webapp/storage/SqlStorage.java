@@ -31,7 +31,7 @@ public class SqlStorage implements Storage {
 //    }
 
     @Override
-    public void clear() throws SQLException {
+    public void clear() {
         LOG.info("cleared");
         String sql = "DELETE FROM resume";
         dataBaseRun(connectionFactory, sql, PreparedStatement::execute);
@@ -45,7 +45,7 @@ public class SqlStorage implements Storage {
     }
 
     @Override
-    public void save(Resume r) throws SQLException {
+    public void save(Resume r) {
         LOG.info("save " + r);
         String sql = "INSERT INTO resume (uuid, full_name) VALUES (?,?)";
         dataBaseRun(connectionFactory, sql, preparedStatement -> {
@@ -68,7 +68,7 @@ public class SqlStorage implements Storage {
     }
 
     @Override
-    public void update(Resume r) throws SQLException {
+    public void update(Resume r) {
         LOG.info("update " + r);
         String sql = "UPDATE resume SET uuid=? WHERE uuid = ?";
         dataBaseRun(connectionFactory, sql, preparedStatement -> {
@@ -92,7 +92,7 @@ public class SqlStorage implements Storage {
     }
 
     @Override
-    public void delete(String uuid) throws SQLException {
+    public void delete(String uuid) {
         LOG.info("delete " + uuid);
         String sql = "DELETE FROM resume r WHERE r.uuid =?";
         dataBaseRun(connectionFactory, sql, preparedStatement -> {
