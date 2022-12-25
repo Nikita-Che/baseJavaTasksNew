@@ -13,7 +13,7 @@ public class SqlHelper {
         void run(PreparedStatement preparedStatement) throws SQLException;
     }
 
-    public static void dataBaseRun(ConnectionFactory connectionFactory, String sql, CustomRunnable runnable) {
+    public static void execute(ConnectionFactory connectionFactory, String sql, CustomRunnable runnable) {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             runnable.run(ps);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static com.urise.webapp.sql.SqlHelper.dataBaseRun;
+import static com.urise.webapp.sql.SqlHelper.execute;
 
 public class SqlStorage implements Storage {
     public final ConnectionFactory connectionFactory;
@@ -24,13 +24,13 @@ public class SqlStorage implements Storage {
     @Override
     public void clear() {
         LOG.info("cleared");
-        dataBaseRun(connectionFactory, "DELETE FROM resume", PreparedStatement::execute);
+        execute(connectionFactory, "DELETE FROM resume", PreparedStatement::execute);
     }
 
     @Override
     public void save(Resume r) {
         LOG.info("save " + r);
-        dataBaseRun(connectionFactory, "INSERT INTO resume (uuid, full_name) VALUES (?,?)", preparedStatement -> {
+        execute(connectionFactory, "INSERT INTO resume (uuid, full_name) VALUES (?,?)", preparedStatement -> {
             preparedStatement.setString(1, r.getUuid());
             preparedStatement.setString(2, r.getFullName());
             preparedStatement.execute();
@@ -40,7 +40,7 @@ public class SqlStorage implements Storage {
     @Override
     public void update(Resume r) {
         LOG.info("update " + r);
-        dataBaseRun(connectionFactory, "UPDATE resume SET uuid=? WHERE uuid = ?", preparedStatement -> {
+        execute(connectionFactory, "UPDATE resume SET uuid=? WHERE uuid = ?", preparedStatement -> {
             preparedStatement.setString(1, r.getUuid());
             preparedStatement.setString(2, r.getUuid());
             if (preparedStatement.executeUpdate() == 0) {
@@ -52,7 +52,7 @@ public class SqlStorage implements Storage {
     @Override
     public void delete(String uuid) {
         LOG.info("delete " + uuid);
-        dataBaseRun(connectionFactory, "DELETE FROM resume r WHERE r.uuid =?", preparedStatement -> {
+        execute(connectionFactory, "DELETE FROM resume r WHERE r.uuid =?", preparedStatement -> {
             preparedStatement.setString(1, uuid);
             if (preparedStatement.executeUpdate() == 0) {
                 throw new NotExistStorageException(uuid);
@@ -64,7 +64,7 @@ public class SqlStorage implements Storage {
     public Resume get(String uuid) {
         LOG.info("get " + uuid);
      //return dataBaseRun( .....
-        dataBaseRun(connectionFactory, "SELECT * FROM resume r WHERE r.uuid =?", preparedStatement -> {
+        execute(connectionFactory, "SELECT * FROM resume r WHERE r.uuid =?", preparedStatement -> {
             preparedStatement.setString(1, uuid);
             ResultSet rs = preparedStatement.executeQuery();
             if (!rs.next()) {
@@ -80,7 +80,7 @@ public class SqlStorage implements Storage {
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
         List<Resume> resumes = new ArrayList<>();
-        dataBaseRun(connectionFactory, "SELECT * from resume ORDER BY full_name", preparedStatement -> {
+        execute(connectionFactory, "SELECT * from resume ORDER BY full_name", preparedStatement -> {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 resumes.add(new Resume(resultSet.getString("uuid"), resultSet.getString("full_name")));
@@ -92,7 +92,7 @@ public class SqlStorage implements Storage {
     @Override
     public int size() {
         final int[] size = {0};
-        dataBaseRun(connectionFactory, "SELECT count(resume) from resume", preparedStatement -> {
+        execute(connectionFactory, "SELECT count(resume) from resume", preparedStatement -> {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             size[0] = resultSet.getInt(1);
