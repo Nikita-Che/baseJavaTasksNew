@@ -15,8 +15,8 @@ public class SqlHelper {
         connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
-    public interface CustomRunnable  {
-        void run(PreparedStatement preparedStatement) throws SQLException;
+    public interface CustomRunnable <T> {
+        T run(PreparedStatement preparedStatement) throws SQLException;
     }
 
     public void execute(String sql, CustomRunnable runnable) {
@@ -31,7 +31,6 @@ public class SqlHelper {
         }
     }
 }
-
 
 
 

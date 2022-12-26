@@ -31,6 +31,7 @@ public class SqlStorage implements Storage {
             preparedStatement.setString(1, r.getUuid());
             preparedStatement.setString(2, r.getFullName());
             preparedStatement.execute();
+            return null;
         });
     }
 
@@ -43,6 +44,7 @@ public class SqlStorage implements Storage {
             if (preparedStatement.executeUpdate() == 0) {
                 throw new NotExistStorageException(r.getUuid());
             }
+            return null;
         });
     }
 
@@ -54,23 +56,24 @@ public class SqlStorage implements Storage {
             if (preparedStatement.executeUpdate() == 0) {
                 throw new NotExistStorageException(uuid);
             }
+            return null;
         });
     }
 
     @Override
     public Resume get(String uuid) {
         LOG.info("get " + uuid);
-        //return dataBaseRun( .....
+        final Resume[] resume = new Resume[1];
         sqlHelper.execute("SELECT * FROM resume r WHERE r.uuid =?", preparedStatement -> {
             preparedStatement.setString(1, uuid);
             ResultSet rs = preparedStatement.executeQuery();
             if (!rs.next()) {
                 throw new NotExistStorageException(uuid);
             }
-//            return new Resume(uuid, rs.getString("full_name"));
+            resume[0] = new Resume(uuid, rs.getString("full_name"));
+            return null;
         });
-        return new Resume(uuid, "full_name");
-        // TODO: 24.12.2022 Проверить работу. просто строку full_name возвращать нельзя, тесты проходят потому что assertGet по uuid сравнивает.
+        return resume[0];
     }
 
     @Override
@@ -82,6 +85,7 @@ public class SqlStorage implements Storage {
             while (resultSet.next()) {
                 resumes.add(new Resume(resultSet.getString("uuid"), resultSet.getString("full_name")));
             }
+            return null;
         });
         return resumes;
     }
@@ -93,6 +97,7 @@ public class SqlStorage implements Storage {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             size[0] = resultSet.getInt(1);
+            return null;
         });
         return size[0];
     }
