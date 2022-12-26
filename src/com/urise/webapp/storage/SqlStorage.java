@@ -63,43 +63,36 @@ public class SqlStorage implements Storage {
     @Override
     public Resume get(String uuid) {
         LOG.info("get " + uuid);
-        final Resume[] resume = new Resume[1];
-        sqlHelper.execute("SELECT * FROM resume r WHERE r.uuid =?", preparedStatement -> {
+        return sqlHelper.execute("SELECT * FROM resume r WHERE r.uuid =?", preparedStatement -> {
             preparedStatement.setString(1, uuid);
             ResultSet rs = preparedStatement.executeQuery();
             if (!rs.next()) {
                 throw new NotExistStorageException(uuid);
             }
-            resume[0] = new Resume(uuid, rs.getString("full_name"));
-            return null;
+            return new Resume(uuid, rs.getString("full_name"));
         });
-        return resume[0];
     }
 
     @Override
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
         List<Resume> resumes = new ArrayList<>();
-        sqlHelper.execute("SELECT * from resume ORDER BY full_name", preparedStatement -> {
+        return sqlHelper.execute("SELECT * from resume ORDER BY full_name", preparedStatement -> {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 resumes.add(new Resume(resultSet.getString("uuid"), resultSet.getString("full_name")));
             }
-            return null;
+            return resumes;
         });
-        return resumes;
     }
 
     @Override
     public int size() {
-        final int[] size = {0};
-        sqlHelper.execute("SELECT count(resume) from resume", preparedStatement -> {
+        return sqlHelper.execute("SELECT count(resume) from resume", preparedStatement -> {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            size[0] = resultSet.getInt(1);
-            return null;
+            return resultSet.getInt(1);
         });
-        return size[0];
     }
 }
 
