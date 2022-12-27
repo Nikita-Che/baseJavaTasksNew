@@ -55,5 +55,6 @@
     <orderEntry type="library" name="glassfish.jaxb.runtime" level="project" />
     <orderEntry type="library" name="google.code.gson" level="project" />
     <orderEntry type="library" name="jakarta.xml.bind.api" level="project" />
+    <orderEntry type="library" name="postgresql-42.2.1" level="project" />
   </component>
 </module>
