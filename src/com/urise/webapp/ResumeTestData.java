@@ -100,7 +100,7 @@ public class ResumeTestData {
         sectionsWorker.put(SectionType.EDUCATION, educationSection);
 
         Resume resume = new Resume(uuid, fullName);
-        resume.addSections(sectionsWorker);
+//        resume.addSections(sectionsWorker);
         resume.addContacts(contacts);
 
         return resume;
