@@ -3,16 +3,14 @@ package com.urise.webapp.storage;
 import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.model.ContactType;
 import com.urise.webapp.model.Resume;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static com.urise.webapp.ResumeTestData.createResume;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -99,6 +97,17 @@ public abstract class AbstractStorageTest {
     @Test()
     public void updateResume() throws Exception {
         Resume resume = RESUME_1;
+        Map<ContactType, String> contacts = new HashMap<>();
+        contacts.put(ContactType.PHONE, "TEST");
+        contacts.put(ContactType.MOBILE, "TEST");
+        contacts.put(ContactType.HOME_PHONE, "TEST");
+        contacts.put(ContactType.EMAIL, "TEST@rambler.ru");
+        contacts.put(ContactType.HOME_PAGE, "http://TEST!!!.ru");
+        contacts.put(ContactType.SKYPE, "TEST");
+        contacts.put(ContactType.GITHUB, "TEST");
+        contacts.put(ContactType.LINKEDIN, "TEST");
+        contacts.put(ContactType.STACKOVERFLOW, "TEST");
+        resume.addContacts(contacts);
         storage.update(resume);
         Assertions.assertSame(resume, RESUME_1);
     }
