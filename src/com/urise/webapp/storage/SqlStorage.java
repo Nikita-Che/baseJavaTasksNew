@@ -97,7 +97,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        //достать все из резюме, потом все из контактов и кодом склеить
+        // TODO: 30.12.2022 добавить секции без OrganizationSection. Join and Split ListSection by '/n' добавить в БД СЕКЦИИ таблицу
         LOG.info("getAllSorted");
         Map<String, Resume> map = new LinkedHashMap<>();
         return sqlHelper.execute("" +
