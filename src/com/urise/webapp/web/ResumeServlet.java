@@ -18,7 +18,7 @@ public class ResumeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         sqlHelper.execute("SELECT * FROM resume", preparedStatement -> {
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String uuid = resultSet.getString("uuid");
                 String fullName = resultSet.getString("full_name");
                 System.out.println(uuid);
@@ -26,8 +26,8 @@ public class ResumeServlet extends HttpServlet {
             }
             return null;
         });
-
-        // TODO: 31.12.2022 нужнос делать  request к базе данных и response отобразить на экране
+    }
+    // TODO: 31.12.2022 нужнос делать  request к базе данных и response отобразить на экране
 //        response.setHeader("Content-Type", "text/html; charset=UTF-8");
 //        String name = request.getParameter("name");
 //        response.getWriter().write(name == null ? "Hello Resumes" : "Hello " + name + " !");
@@ -39,7 +39,7 @@ public class ResumeServlet extends HttpServlet {
 //        }
 //        Resume resume = new Resume("Konchen-    ii  ");
 //        response.getWriter().write(String.valueOf(resume));
-    }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
