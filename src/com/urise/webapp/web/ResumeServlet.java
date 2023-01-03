@@ -39,7 +39,6 @@ public class ResumeServlet extends HttpServlet {
 //        }
 //        Resume resume = new Resume("Konchen-    ii  ");
 //        response.getWriter().write(String.valueOf(resume));
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
