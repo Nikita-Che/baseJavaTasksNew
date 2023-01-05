@@ -14,7 +14,6 @@ public class ServletTest extends HttpServlet {
         out.println("<h1>Hello Servlet</h1>");
 
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
