@@ -35,7 +35,7 @@ public class ResumeServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-//        response.setHeader("Content-Type", "text/html; charset=UTF-8");
+        response.setHeader("Content-Type", "text/html; charset=UTF-8");
 //        String name = request.getParameter("name");
 //        String fullName = request.getParameter("fullname");
 //        response.getWriter().write(name == null ? "Hello Resumes " : "Hello " + name + " !" + "\n");
