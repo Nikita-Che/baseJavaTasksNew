@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="resume:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/resume_Web_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="basejava" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="junit.platform.suite" />
+          <element id="library" level="project" name="junit.jupiter" />
+          <element id="library" level="project" name="javax.xml.bind.jaxb.api" />
+          <element id="library" level="project" name="javax.xml.bind.activation" />
+          <element id="library" level="project" name="jakarta.xml.bind.api" />
+          <element id="library" level="project" name="javax.xml.bind.jaxb.api1" />
+          <element id="library" level="project" name="glassfish.jaxb.runtime" />
+          <element id="library" level="project" name="google.code.gson" />
+          <element id="library" level="project" name="postgresql-42.2.1" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="basejava/web/Web" />
+    </root>
+  </artifact>
+</component>

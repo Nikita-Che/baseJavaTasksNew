@@ -7,7 +7,7 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses(
         {
                 ArrayStorageTest.class,
-                SortedArrayStorageTest.class,
+                urise.webapp.storage.SortedArrayStorageTest.class,
                 ListStorageTest.class,
                 MapUuidStorageTest.class,
                 MapResumeStorageTest.class,

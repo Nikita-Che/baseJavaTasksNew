@@ -1,5 +1,6 @@
 package com.urise.webapp.storage.serializer;
 
+
 import com.urise.webapp.model.*;
 import com.urise.webapp.util.XmlParser;
 
@@ -24,7 +25,7 @@ public class XmlStreamSerializer implements SerializerStrategie {
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
-        try (Reader r = new InputStreamReader(is,StandardCharsets.UTF_8)) {
+        try (Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             return xmlParser.unmarshall(r);
         }
     }

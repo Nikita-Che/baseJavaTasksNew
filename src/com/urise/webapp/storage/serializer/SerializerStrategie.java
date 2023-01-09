@@ -11,5 +11,5 @@ public interface SerializerStrategie {
 
     void doWrite(Resume resume, OutputStream os) throws IOException;
 
-    Resume doRead(InputStream is) throws IOException ;
+    Resume doRead(InputStream is) throws IOException;
 }
