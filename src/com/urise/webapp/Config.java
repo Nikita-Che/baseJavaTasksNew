@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class Config {
     private static final Config INSTANCE = new Config();
-    protected static final File PROPS = new File("./config/resumes.properties");
+    protected static final File PROPS = new File("C:\\Users\\nikita\\Desktop\\GitHub\\basejava\\config\\resumes.properties");
     private final File storageDir;
     public Properties props = new Properties();
     public Storage storage;
@@ -23,7 +23,7 @@ public class Config {
 
     private Config() {
 
-        try (InputStream is = new FileInputStream("./config/resumes.properties")) {
+        try (InputStream is = new FileInputStream("C:\\Users\\nikita\\Desktop\\GitHub\\basejava\\config\\resumes.properties")) {
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
             storage = new SqlStorage(new SqlHelper(props.getProperty("db.url"),props.getProperty("db.user"), props.getProperty("db.password")));
