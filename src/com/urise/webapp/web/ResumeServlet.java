@@ -15,6 +15,13 @@ import java.util.List;
 
 @WebServlet(name = "ResumeServlet", value = "/resume")
 public class ResumeServlet extends HttpServlet {
+    Storage storage;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        storage = Config.get().storage;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +29,7 @@ public class ResumeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         PrintWriter printWriter = response.getWriter();
-        Storage storage = Config.get().storage;
+
         List<Resume> allSorted = storage.getAllSorted();
         printWriter.write("<h1>Resume Table</h1>");
         printWriter.write("<img src=\"https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg\" alt=\"A cute orange cat lying on its back.\">");

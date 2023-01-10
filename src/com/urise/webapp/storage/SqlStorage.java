@@ -104,8 +104,8 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        // TODO: 30.12.2022 добавить секции без OrganizationSection. Join and Split ListSection by '/n' добавить в БД СЕКЦИИ таблицу
-        LOG.info("getAllSorted");return sqlHelper.transactionalExecute(conn -> {
+        LOG.info("getAllSorted");
+        return sqlHelper.transactionalExecute(conn -> {
             Map<String, Resume> resumes = new LinkedHashMap<>();
 
             try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name, uuid")) {
@@ -216,7 +216,7 @@ public class SqlStorage implements Storage {
 //        content = content.replace("[", "");
 //        content = content.replace("]", "");
         List<String> list = new ArrayList<>();
-        list.add(content1);
+        list.add(content);
         ListSection listSection = new ListSection();
         listSection.setItems(list);
         if (content != null) {
