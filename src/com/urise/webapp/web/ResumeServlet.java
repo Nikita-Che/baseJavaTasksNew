@@ -24,7 +24,8 @@ public class ResumeServlet extends HttpServlet {
         PrintWriter printWriter = response.getWriter();
         Storage storage = Config.get().storage;
         List<Resume> allSorted = storage.getAllSorted();
-        printWriter.write("<h1>Resume Table  <table border=20>  </h1>" + " <br />");
+        printWriter.write("<h1>Resume Table</h1>");
+        printWriter.write("<img src=\"https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg\" alt=\"A cute orange cat lying on its back.\">");
         for (Resume resume : allSorted) {
             printWriter.write("<html> " +
                     "<table>\n" +

@@ -1,12 +1,10 @@
 <component name="libraryTable">
   <library name="guicedee.services.javax.servlet.api" type="repository">
-    <properties maven-id="com.guicedee.services:javax.servlet-api:1.0.1.7" />
+    <properties maven-id="com.guicedee.services:javax.servlet-api:62" />
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/guicedee/services/javax.servlet-api/1.0.1.7/javax.servlet-api-1.0.1.7.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/guicedee/services/javax.servlet-api/62/javax.servlet-api-62.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.ideaLibSources/javax.servlet-api-1.0.1.7-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>
