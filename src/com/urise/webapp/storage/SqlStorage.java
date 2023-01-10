@@ -8,10 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class SqlStorage implements Storage {
@@ -196,6 +193,27 @@ public class SqlStorage implements Storage {
                 ps.setString(2, e.getKey().name());
                 AbstractSection section = e.getValue();
                 ps.setString(3, section.toString());
+
+
+//                StringBuilder stringBuilder = new StringBuilder();
+//
+//                if (section instanceof TextSection) {
+//                    String content = ((TextSection) section).getContent();
+//                    stringBuilder.append(content);
+//                }
+//
+//                if (section instanceof ListSection) {
+//                    List<String> items = ((ListSection) section).getItems();
+//                    for (int i = 0; i < items.size(); i++) {
+//                        stringBuilder.append(items.get(i));
+//                        if (i != items.size() - 1) {
+//                            stringBuilder.append(", ");
+//                        }
+//                    }
+//                }
+//                ps.setObject(3, stringBuilder.toString());
+
+
                 ps.addBatch();
             }
             ps.executeBatch();
@@ -212,17 +230,46 @@ public class SqlStorage implements Storage {
 
     private void addSectionToResume(ResultSet rs, Resume r) throws SQLException {
         String content = rs.getString("content");
-        String content1 = content.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", "");
-//        content = content.replace("[", "");
-//        content = content.replace("]", "");
-        List<String> list = new ArrayList<>();
-        list.add(content);
-        ListSection listSection = new ListSection();
-        listSection.setItems(list);
-        if (content != null) {
-            SectionType type = SectionType.valueOf(rs.getString("type"));
+        StringBuilder stringBuilder = new StringBuilder();
+
+        SectionType type = SectionType.valueOf(rs.getString("type"));
+        if (type.name().equals("PERSONAL") || type.name().equals("OBJECTIVE")) {
+            TextSection textSection = new TextSection();
+            textSection.setContent(content.trim());
+            r.addSection(type, textSection);
+        }
+        if (type.name().equals("ACHIEVEMENT") || type.name().equals("QUALIFICATIONS")) {
+            ListSection listSection = new ListSection();
+            String c = content;
+            List<String> list = List.of("HER");
+//            List<String> list = List.of(c);
+//            List<String> list = List.of(content);
+
+            listSection.setItems(list);
             r.addSection(type, listSection);
         }
     }
 }
+
+
+//        PERSONAL("Личные качества"), //textSection
+//                ("Позиция"),       //textSection
+//                ACHIEVEMENT("Достижения"),  //ListSection
+//                QUALIFICATIONS("Квалификация"), //ListSection
+
+//            List<String> list = new ArrayList<>();
+//            list.add(content + "PIDOOOOOOOO");
+//            ListSection listSection = new ListSection();
+//            listSection.setItems(list);
+
+
+//        String content = rs.getString("content");
+//        List<String> list = new ArrayList<>();
+//        list.add(content+ "PIDOOOOOOOO");
+//        ListSection listSection = new ListSection();
+//        listSection.setItems(list);
+//        if (content != null) {
+//            SectionType type = SectionType.valueOf(rs.getString("type"));
+//            r.addSection(type, listSection);
+//        }
 
